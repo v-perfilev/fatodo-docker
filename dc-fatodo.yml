@@ -69,7 +69,6 @@ services:
       WAIT_HOSTS: registry:8761
 
 networks:
-
   fatodo:
     external:
       name: fatodo
