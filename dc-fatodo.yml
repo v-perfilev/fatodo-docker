@@ -1,0 +1,75 @@
+version: "3.7"
+
+services:
+
+  config-server:
+    build: ../fatodo-config-server
+    container_name: fatodo-config-server
+    ports:
+      - "8888:8888"
+    restart: always
+    networks:
+      - fatodo
+    volumes:
+      - ../fatodo-config-repo/:/tmp/fatodo-config-repo/
+    environment:
+      SPRING_PROFILES_DEFAULT: docker
+      WAIT_HOSTS: mongodb:27017, zipkin:9411
+
+  registry:
+    build: ../fatodo-registry
+    container_name: fatodo-registry
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_DEFAULT: docker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: config-server:8888
+
+  gateway:
+    build: ../fatodo-gateway
+    container_name: fatodo-gateway
+    ports:
+      - "4000:4000"
+    restart: always
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+  auth-service:
+    build: ../fatodo-auth-service
+    container_name: fatodo-auth-service
+    ports:
+      - "8001:8001"
+    restart: always
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+  user-service:
+    build: ../fatodo-user-service
+    container_name: fatodo-user-service
+    ports:
+      - "8002:8002"
+    restart: always
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+networks:
+
+  fatodo:
+    external:
+      name: fatodo
