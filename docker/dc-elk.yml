@@ -1,0 +1,65 @@
+version: "3.7"
+
+services:
+
+  elk-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
+    container_name: elk-elasticsearch
+    restart: always
+    ports:
+      - "9200:9200"
+    networks:
+      - fatodo
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - cluster.name=es-cluster
+      - node.name=es-node
+      - discovery.type=single-node
+      - path.data=/usr/share/elasticsearch/data
+      - http.port=9200
+      - http.host=0.0.0.0
+      - transport.host=127.0.0.1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  elk-kibana:
+    image: docker.elastic.co/kibana/kibana:7.6.1
+    container_name: elk-kibana
+    restart: always
+    ports:
+      - "5601:5601"
+    networks:
+      - fatodo
+    environment:
+      - server.name=elk-kibana
+      - server.port=127.0.0.1:5601
+      - "ELASTICSEARCH_URL=http://elk-elasticsearch:9200"
+      - "ELASTICSEARCH_HOSTS=http://elk-elasticsearch:9200"
+
+  elk-logstash:
+    image: docker.elastic.co/logstash/logstash:7.6.1
+    container_name: elk-logstash
+    restart: always
+    ports:
+      - "9600:9600"
+    networks:
+      - fatodo
+    volumes:
+      - ./elk/logstash.conf:/usr/share/logstash/config/logstash.conf
+    environment:
+      - xpack.monitoring.elasticsearch.hosts=http://elk-elasticsearch:9200
+      - session_timeout_ms=1000
+    command: logstash -f /usr/share/logstash/config/logstash.conf
+
+volumes:
+  elasticsearch:
+
+networks:
+  fatodo:
+    external:
+      name: fatodo

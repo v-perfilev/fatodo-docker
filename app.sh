@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
 
-BASE_DIR=$(
-  cd "$(dirname "$0")" || exit
-  pwd
-)
-
 if [[ $1 == "up" ]]; then
-  docker network create \
-    --driver=bridge \
-    --subnet=192.168.50.0/24 \
-    fatodo
+  ./app-network.sh up
+  ./app-kafka.sh up -d
+  ./app-elk.sh up -d
+  ./app-zipkin.sh up -d
+  ./app-mongo.sh up -d
+  ./app-fatodo.sh up -d
 fi
 
-docker-compose \
-  -f "$BASE_DIR/dc-zipkin.yml" \
-  -f "$BASE_DIR/dc-mongo.yml" \
-  -f "$BASE_DIR/dc-fatodo.yml" \
-  "$@"
-
 if [[ $1 == "down" ]]; then
-  docker network rm \
-    fatodo
+  ./app-kafka.sh down
+  ./app-elk.sh down
+  ./app-zipkin.sh down
+  ./app-mongo.sh down
+  ./app-fatodo.sh down
+  ./app-network.sh down
 fi
