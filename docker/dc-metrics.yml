@@ -1,0 +1,44 @@
+version: "3.7"
+
+services:
+
+  metrics-grafana:
+    image: grafana/grafana:6.7.1
+    container_name: metrics-grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    networks:
+      - fatodo
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+
+  metrics-influx:
+    image: influxdb:1.7.10
+    container_name: metrics-influx
+    restart: always
+    ports:
+      - "8086:8086"
+    networks:
+      - fatodo
+    volumes:
+      - influxdb:/var/lib/influxdb
+    environment:
+      INFLUXDB_HTTP_AUTH_ENABLED: "true"
+      INFLUXDB_DB: fatodo
+      INFLUXDB_USER: metrics-user
+      INFLUXDB_USER_PASSWORD: dev
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: admin
+
+volumes:
+  grafana:
+  influxdb:
+
+networks:
+  fatodo:
+    external:
+      name: fatodo

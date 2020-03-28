@@ -50,7 +50,7 @@ services:
     networks:
       - fatodo
     volumes:
-      - ./elk/logstash.conf:/usr/share/logstash/config/logstash.conf
+      - ./config/logstash/logstash.conf:/usr/share/logstash/config/logstash.conf
     environment:
       - xpack.monitoring.elasticsearch.hosts=http://elk-elasticsearch:9200
       - session_timeout_ms=1000

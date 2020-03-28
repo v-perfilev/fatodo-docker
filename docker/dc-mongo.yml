@@ -10,10 +10,10 @@ services:
     networks:
       - fatodo
     volumes:
-      - db:/data/db/
+      - mongodb:/data/db/
 
 volumes:
-  db:
+  mongodb:
 
 networks:
   fatodo:
