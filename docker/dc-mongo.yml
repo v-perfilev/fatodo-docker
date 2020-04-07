@@ -11,6 +11,9 @@ services:
       - fatodo
     volumes:
       - mongodb:/data/db/
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo-user
+      MONGO_INITDB_ROOT_PASSWORD: dev
 
 volumes:
   mongodb:
