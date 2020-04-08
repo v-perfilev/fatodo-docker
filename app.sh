@@ -15,6 +15,7 @@ if [[ $1 == "down" ]]; then
   ./app-elk.sh down
   ./app-metrics.sh down
   ./app-zipkin.sh down
+  ./app-redis.sh down
   ./app-mongo.sh down
   ./app-fatodo.sh down
   ./app-network.sh down

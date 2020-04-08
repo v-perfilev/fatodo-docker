@@ -6,5 +6,5 @@ BASE_DIR=$(
 )/docker
 
 docker-compose \
-  -f "$BASE_DIR/dc-kafka.yml" \
+  -f "$BASE_DIR/dc-redis.yml" \
   "$@"
