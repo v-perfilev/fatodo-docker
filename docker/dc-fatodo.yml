@@ -73,6 +73,20 @@ services:
       CONFIG_SERVER_HOST: config-server
       WAIT_HOSTS: registry:8761
 
+  item-service:
+    build: ../../fatodo-item-service
+    container_name: fatodo-item-service
+    restart: always
+    ports:
+      - "8003:8003"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
 networks:
   fatodo:
     external:

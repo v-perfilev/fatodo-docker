@@ -6,6 +6,7 @@ if [[ $1 == "up" ]]; then
   ./app-elk.sh up -d
   ./app-metrics.sh up -d
   ./app-zipkin.sh up -d
+  ./app-redis.sh up -d
   ./app-mongo.sh up -d
   ./app-fatodo.sh up -d
 fi
