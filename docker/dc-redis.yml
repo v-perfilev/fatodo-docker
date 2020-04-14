@@ -3,7 +3,7 @@ version: "3.7"
 services:
   redis:
     image: redis
-    container_name: reids
+    container_name: redis
     restart: always
     ports:
       - "6379:6379"
