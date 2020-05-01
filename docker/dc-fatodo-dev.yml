@@ -1,0 +1,100 @@
+version: "3.7"
+
+services:
+
+  config-server:
+    build: ../../fatodo-config-server
+    container_name: fatodo-config-server
+    restart: always
+    ports:
+      - "8888:8888"
+    networks:
+      - fatodo
+    volumes:
+      - ../../fatodo-config-repo/:/tmp/fatodo-config-repo/
+    environment:
+      SPRING_PROFILES_DEFAULT: devDocker
+      WAIT_HOSTS: mongodb:27017
+
+  registry:
+    build: ../../fatodo-registry
+    container_name: fatodo-registry
+    restart: always
+    ports:
+      - "8761:8761"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_DEFAULT: devDocker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: config-server:8888
+
+  gateway:
+    build: ../../fatodo-gateway
+    container_name: fatodo-gateway
+    restart: always
+    ports:
+      - "4000:4000"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: devDocker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+  auth-service:
+    build: ../../fatodo-auth-service
+    container_name: fatodo-auth-service
+    restart: always
+    ports:
+      - "8001:8001"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: devDocker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+  user-service:
+    build: ../../fatodo-user-service
+    container_name: fatodo-user-service
+    restart: always
+    ports:
+      - "8002:8002"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: devDocker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+  item-service:
+    build: ../../fatodo-item-service
+    container_name: fatodo-item-service
+    restart: always
+    ports:
+      - "8003:8003"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: devDocker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+  group-service:
+    build: ../../fatodo-group-service
+    container_name: fatodo-group-service
+    restart: always
+    ports:
+      - "8004:8004"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: devDocker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+networks:
+  fatodo:
+    external:
+      name: fatodo

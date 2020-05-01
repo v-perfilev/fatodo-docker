@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
 if [[ $1 == "up" ]]; then
-  ./app-network.sh up
-  ./app-kafka.sh up -d
-  ./app-elk.sh up -d
-  ./app-metrics.sh up -d
-  ./app-zipkin.sh up -d
-  ./app-redis.sh up -d
-  ./app-mongo.sh up -d
-  ./app-fatodo.sh up -d
+  ./network.sh up
+  ./env-kafka.sh up -d
+  ./env-elk.sh up -d
+  ./env-metrics.sh up -d
+  ./env-zipkin.sh up -d
+  ./env-redis.sh up -d
+  ./env-mongo.sh up -d
+  ./fatodo.sh up -d
 fi
 
 if [[ $1 == "down" ]]; then
-  ./app-kafka.sh down
-  ./app-elk.sh down
-  ./app-metrics.sh down
-  ./app-zipkin.sh down
-  ./app-redis.sh down
-  ./app-mongo.sh down
-  ./app-fatodo.sh down
-  ./app-network.sh down
+  ./env-kafka.sh down
+  ./env-elk.sh down
+  ./env-metrics.sh down
+  ./env-zipkin.sh down
+  ./env-redis.sh down
+  ./env-mongo.sh down
+  ./fatodo.sh down
+  ./network.sh down
 fi
