@@ -9,6 +9,7 @@ if [[ $1 == "up" ]]; then
   ./env-redis.sh up -d
   ./env-mongo.sh up -d
   ./fatodo.sh up -d
+  ./fatodo-web.sh up -d
 fi
 
 if [[ $1 == "down" ]]; then
@@ -19,6 +20,7 @@ if [[ $1 == "down" ]]; then
   ./env-redis.sh down
   ./env-mongo.sh down
   ./fatodo.sh down
+  ./fatodo-web.sh down
   ./network.sh down
 fi
 

@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+
+  frontend:
+    build: ../../fatodo-web
+    container_name: fatodo-web
+    restart: always
+    ports:
+      - "9000:80"
+    networks:
+      - fatodo
+
+networks:
+  fatodo:
+    external:
+      name: fatodo

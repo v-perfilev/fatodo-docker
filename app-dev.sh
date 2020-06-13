@@ -13,3 +13,8 @@ if [[ $1 == "down" ]]; then
   ./fatodo-dev.sh down
   ./network.sh down
 fi
+
+if [[ $1 == "build" ]]; then
+  ./fatodo-dev.sh build
+  ./fatodo-web.sh build
+fi
