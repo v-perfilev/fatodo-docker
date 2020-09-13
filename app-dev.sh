@@ -16,5 +16,4 @@ fi
 
 if [[ $1 == "build" ]]; then
   ./fatodo-dev.sh build
-  ./fatodo-web.sh build
 fi
