@@ -107,6 +107,19 @@ services:
       CONFIG_SERVER_HOST: config-server
       WAIT_HOSTS: registry:8761
 
+  image-service:
+    build: ../../fatodo-image-service
+    container_name: fatodo-image-service
+    restart: always
+    ports:
+      - "8006:8006"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: devDocker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
 networks:
   fatodo:
     external:
