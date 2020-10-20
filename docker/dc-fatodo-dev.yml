@@ -14,7 +14,7 @@ services:
       - ../../fatodo-config-repo/:/tmp/fatodo-config-repo/
     environment:
       SPRING_PROFILES_DEFAULT: devDocker
-      WAIT_HOSTS: mongodb:27017
+      WAIT_HOSTS: mongodb:27017, mysql:3306
 
   registry:
     build: ../../fatodo-registry

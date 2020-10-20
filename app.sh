@@ -8,6 +8,7 @@ if [[ $1 == "up" ]]; then
   ./env-zipkin.sh up -d
   ./env-redis.sh up -d
   ./env-mongo.sh up -d
+  ./env-mysql.sh up -d
   ./fatodo.sh up -d
 fi
 
@@ -18,6 +19,7 @@ if [[ $1 == "down" ]]; then
   ./env-zipkin.sh down
   ./env-redis.sh down
   ./env-mongo.sh down
+  ./env-mysql.sh down
   ./fatodo.sh down
   ./network.sh down
 fi

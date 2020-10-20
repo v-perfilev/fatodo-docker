@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:8.0.20
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - fatodo
+    volumes:
+      - mysql:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: mysql-user
+      MYSQL_PASSWORD: dev
+      MYSQL_DATABASE: fatodo
+
+volumes:
+  mysql:
+
+networks:
+  fatodo:
+    external:
+      name: fatodo
