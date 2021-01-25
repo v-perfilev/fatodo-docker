@@ -9,7 +9,12 @@ services:
       - "6379:6379"
     networks:
       - fatodo
+    volumes:
+      - redis:/data/
     command: redis-server --requirepass dev
+
+volumes:
+  redis:
 
 networks:
   fatodo:
