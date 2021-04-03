@@ -133,12 +133,25 @@ services:
       CONFIG_SERVER_HOST: config-server
       WAIT_HOSTS: registry:8761
 
-  message-service:
-    build: ../../fatodo-message-service
-    container_name: fatodo-message-service
+  chat-service:
+    build: ../../fatodo-chat-service
+    container_name: fatodo-chat-service
     restart: always
     ports:
       - "8008:8008"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: devDocker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
+  ws-service:
+    build: ../../fatodo-ws-service
+    container_name: fatodo-ws-service
+    restart: always
+    ports:
+      - "8009:8009"
     networks:
       - fatodo
     environment:
