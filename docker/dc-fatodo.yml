@@ -171,6 +171,20 @@ services:
       CONFIG_SERVER_HOST: config-server
       WAIT_HOSTS: registry:8761
 
+  comment-service:
+    build: ../../fatodo-comment-service
+    container_name: fatodo-comment-service
+    restart: always
+    ports:
+      - "8010:8010"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      KAFKA_BOOTSTRAP_SERVERS: kafka-broker:29092
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
 networks:
   fatodo:
     external:
