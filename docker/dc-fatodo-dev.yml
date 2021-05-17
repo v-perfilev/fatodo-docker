@@ -81,19 +81,6 @@ services:
       CONFIG_SERVER_HOST: config-server
       WAIT_HOSTS: registry:8761
 
-  group-service:
-    build: ../../fatodo-group-service
-    container_name: fatodo-group-service
-    restart: always
-    ports:
-      - "8004:8004"
-    networks:
-      - fatodo
-    environment:
-      SPRING_PROFILES_ACTIVE: devDocker
-      CONFIG_SERVER_HOST: config-server
-      WAIT_HOSTS: registry:8761
-
   mail-service:
     build: ../../fatodo-mail-service
     container_name: fatodo-mail-service
