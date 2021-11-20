@@ -159,6 +159,19 @@ services:
       CONFIG_SERVER_HOST: config-server
       WAIT_HOSTS: registry:8761
 
+  notification-service:
+    build: ../../fatodo-notification-service
+    container_name: fatodo-notification-service
+    restart: always
+    ports:
+      - "8011:8011"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
 networks:
   fatodo:
     external:
