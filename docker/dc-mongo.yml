@@ -22,5 +22,4 @@ volumes:
 
 networks:
   fatodo:
-    external:
-      name: fatodo
+    name: fatodo
