@@ -20,6 +20,7 @@ services:
     restart: always
     ports:
       - "9092:9092"
+      - "29092:9092"
     networks:
       - fatodo
     environment:
