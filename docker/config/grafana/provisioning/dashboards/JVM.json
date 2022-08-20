@@ -22,19 +22,20 @@
       "cacheTimeout": null,
       "datasource": null,
       "gridPos": {
-        "h": 3,
+        "h": 4,
         "w": 24,
         "x": 0,
         "y": 0
       },
+      "hideTimeOverride": true,
       "id": 8,
-      "interval": "",
+      "interval": "1m",
       "links": [],
       "options": {
         "colorMode": "value",
         "fieldOptions": {
           "calcs": [
-            "lastNotNull"
+            "last"
           ],
           "defaults": {
             "mappings": [],
@@ -43,12 +44,16 @@
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "orange",
+                  "color": "dark-red",
                   "value": null
                 },
                 {
+                  "color": "orange",
+                  "value": 1
+                },
+                {
                   "color": "green",
-                  "value": 3600
+                  "value": 1200
                 }
               ]
             },
@@ -69,7 +74,7 @@
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "30s"
               ],
               "type": "time"
             },
@@ -81,11 +86,12 @@
             },
             {
               "params": [
-                "null"
+                "0"
               ],
               "type": "fill"
             }
           ],
+          "limit": "",
           "measurement": "process_uptime",
           "orderByTime": "ASC",
           "policy": "default",
@@ -111,7 +117,8 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [],
+          "tz": ""
         }
       ],
       "timeFrom": null,
@@ -126,7 +133,7 @@
         "h": 5,
         "w": 24,
         "x": 0,
-        "y": 3
+        "y": 4
       },
       "id": 10,
       "options": {
@@ -137,22 +144,26 @@
           "defaults": {
             "decimals": 2,
             "mappings": [],
-            "max": 10,
+            "max": 1,
             "min": 0,
             "thresholds": {
               "mode": "absolute",
               "steps": [
                 {
-                  "color": "green",
+                  "color": "dark-red",
                   "value": null
                 },
                 {
+                  "color": "green",
+                  "value": 0.0001
+                },
+                {
                   "color": "#EAB839",
-                  "value": 5
+                  "value": 0.3
                 },
                 {
                   "color": "red",
-                  "value": 8
+                  "value": 0.7
                 }
               ]
             },
@@ -172,7 +183,7 @@
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "30s"
               ],
               "type": "time"
             },
@@ -184,7 +195,7 @@
             },
             {
               "params": [
-                "null"
+                "0"
               ],
               "type": "fill"
             }
@@ -204,7 +215,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -222,28 +233,32 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "decimals": 0,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 5,
-        "w": 8,
+        "w": 12,
         "x": 0,
-        "y": 8
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 14,
       "legend": {
         "avg": false,
         "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
         "max": false,
         "min": false,
-        "show": false,
-        "total": false,
-        "values": false
+        "rightSide": true,
+        "show": true,
+        "total": true,
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
@@ -257,6 +272,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "alias": "[[tag_routeUri]]",
           "groupBy": [
             {
               "params": [
@@ -266,12 +282,12 @@
             },
             {
               "params": [
-                "service"
+                "routeUri"
               ],
               "type": "tag"
             }
           ],
-          "measurement": "http_server_requests",
+          "measurement": "spring_cloud_gateway_requests",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -280,21 +296,27 @@
             [
               {
                 "params": [
-                  "value"
+                  "count"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
           "tags": [
             {
               "key": "status",
-              "operator": "<",
-              "value": "300"
+              "operator": "=",
+              "value": "OK"
+            },
+            {
+              "condition": "OR",
+              "key": "status",
+              "operator": "=",
+              "value": "CREATED"
             }
           ]
         }
@@ -319,8 +341,8 @@
       },
       "yaxes": [
         {
-          "decimals": null,
-          "format": "iops",
+          "decimals": 0,
+          "format": "ops",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -347,28 +369,32 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "decimals": 0,
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
         "h": 5,
-        "w": 8,
-        "x": 8,
-        "y": 8
+        "w": 12,
+        "x": 12,
+        "y": 9
       },
       "hiddenSeries": false,
-      "id": 15,
+      "id": 20,
       "legend": {
         "avg": false,
         "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
         "max": false,
         "min": false,
-        "show": false,
-        "total": false,
-        "values": false
+        "rightSide": true,
+        "show": true,
+        "total": true,
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
@@ -382,6 +408,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "alias": "[[tag_routeUri]] - [[tag_httpStatusCode]]",
           "groupBy": [
             {
               "params": [
@@ -391,12 +418,18 @@
             },
             {
               "params": [
-                "service"
+                "routeUri"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "httpStatusCode"
               ],
               "type": "tag"
             }
           ],
-          "measurement": "http_server_requests",
+          "measurement": "spring_cloud_gateway_requests",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -405,27 +438,27 @@
             [
               {
                 "params": [
-                  "value"
+                  "count"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
           "tags": [
             {
               "key": "status",
-              "operator": ">",
-              "value": "399"
+              "operator": "!=",
+              "value": "OK"
             },
             {
               "condition": "AND",
               "key": "status",
-              "operator": "<",
-              "value": "500"
+              "operator": "!=",
+              "value": "CREATED"
             }
           ]
         }
@@ -434,7 +467,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "4xx requests",
+      "title": "3xx, 4xx and 5xx requests",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -450,131 +483,8 @@
       },
       "yaxes": [
         {
-          "format": "iops",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 5,
-        "w": 8,
-        "x": 16,
-        "y": 8
-      },
-      "hiddenSeries": false,
-      "id": 16,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "service"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "http_server_requests",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "status",
-              "operator": ">",
-              "value": "499"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "5xx requests",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "iops",
+          "decimals": 0,
+          "format": "ops",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -607,7 +517,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 13
+        "y": 14
       },
       "hiddenSeries": false,
       "id": 11,
@@ -738,7 +648,7 @@
         "h": 7,
         "w": 6,
         "x": 12,
-        "y": 13
+        "y": 14
       },
       "hiddenSeries": false,
       "id": 12,
@@ -872,7 +782,7 @@
         "h": 7,
         "w": 6,
         "x": 18,
-        "y": 13
+        "y": 14
       },
       "hiddenSeries": false,
       "id": 17,
@@ -1000,13 +910,153 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "InfluxDB",
+      "decimals": 0,
       "fill": 5,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
-        "w": 12,
+        "w": 8,
         "x": 0,
-        "y": 20
+        "y": 21
+      },
+      "hiddenSeries": false,
+      "id": 21,
+      "interval": "",
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": false,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.7.1",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "[[tag_service]]",
+          "dimensions": {},
+          "expression": "",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "service"
+              ],
+              "type": "tag"
+            }
+          ],
+          "id": "",
+          "matchExact": true,
+          "measurement": "jvm_memory_used",
+          "metricName": "",
+          "namespace": "",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "SELECT sum(\"value\") FROM \"jvm_memory_used\" WHERE (\"area\" = 'heap' AND \"service\" = 'auth-service') AND $timeFilter GROUP BY time($__interval), \"id\" fill(null)",
+          "rawQuery": false,
+          "refId": "A",
+          "region": "default",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "statistics": [
+            "Average"
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "JVM total memory usage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "decimals": 0,
+      "fill": 5,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 8,
+        "x": 8,
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 2,
@@ -1017,7 +1067,7 @@
         "current": false,
         "hideEmpty": false,
         "hideZero": false,
-        "max": true,
+        "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
@@ -1057,12 +1107,6 @@
                 "service"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "id": "",
@@ -1087,7 +1131,7 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "sum"
               }
             ]
           ],
@@ -1150,13 +1194,14 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "InfluxDB",
+      "decimals": 0,
       "fill": 5,
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 20
+        "w": 8,
+        "x": 16,
+        "y": 21
       },
       "hiddenSeries": false,
       "id": 3,
@@ -1165,7 +1210,7 @@
         "alignAsTable": true,
         "avg": true,
         "current": false,
-        "max": true,
+        "max": false,
         "min": false,
         "rightSide": true,
         "show": true,
@@ -1204,12 +1249,6 @@
                 "service"
               ],
               "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
             }
           ],
           "id": "",
@@ -1232,7 +1271,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "sum"
               }
             ]
           ],
@@ -1321,5 +1360,5 @@
   "variables": {
     "list": []
   },
-  "version": 7
+  "version": 18
 }
