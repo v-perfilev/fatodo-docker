@@ -9,6 +9,7 @@ if [[ $1 == "up" ]]; then
   ./env-redis.sh up -d
   ./env-mongo.sh up -d
   ./env-mysql.sh up -d
+  ./env-rabbitmq.sh up -d
   ./fatodo.sh up -d
 fi
 
@@ -20,6 +21,7 @@ if [[ $1 == "down" ]]; then
   ./env-redis.sh down
   ./env-mongo.sh down
   ./env-mysql.sh down
+  ./env-rabbitmq.sh down
   ./fatodo.sh down
   ./network.sh down
 fi

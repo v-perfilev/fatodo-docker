@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  rabbitmq:
+    image: rabbitmq:3.10.7-alpine
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+    networks:
+      - fatodo
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq/
+    environment:
+      RABBITMQ_DEFAULT_USER: rabbitmq-user
+      RABBITMQ_DEFAULT_PASS: dev
+
+volumes:
+  rabbitmq:
+
+networks:
+  fatodo:
+    name: fatodo
