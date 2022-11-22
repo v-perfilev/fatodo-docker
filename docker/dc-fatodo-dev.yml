@@ -159,6 +159,18 @@ services:
       CONFIG_SERVER_HOST: config-server
       WAIT_HOSTS: registry:8761
 
+  event-service:
+    image: fatodo-event-service
+    restart: always
+    ports:
+      - "8012:8012"
+    networks:
+      - fatodo
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_HOST: config-server
+      WAIT_HOSTS: registry:8761
+
 networks:
   fatodo:
     name: fatodo
