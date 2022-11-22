@@ -3,7 +3,7 @@
 declare -a arr=("fatodo-auth-service"
                 "fatodo-chat-service"
                 "fatodo-comment-service"
-                "fatodo-config-service"
+                "fatodo-config-server"
                 "fatodo-contact-service"
                 "fatodo-event-service"
                 "fatodo-gateway"
